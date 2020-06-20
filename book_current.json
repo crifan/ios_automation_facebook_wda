@@ -1,0 +1,19 @@
+{
+  "title": "iOS自动化测试利器：facebook-wda",
+  "description": "总结iOS自动化主流框架facebook-wda的简介，环境搭建以及常见问题，以及开发的心得，尤其是iOS的各种坑，以及常用代码段，并给出部分源码分析，最后附上文档和参考资料。",
+  "pluginsConfig": {
+    "github-buttons": {
+      "buttons": [
+        {
+          "repo": "ios_automation_facebook_wda"
+        }
+      ]
+    },
+    "sitemap-general": {
+      "prefix": "https://book.crifan.com/gitbook/ios_automation_facebook_wda/website/"
+    },
+    "toolbar-button": {
+      "url": "http://book.crifan.com/books/ios_automation_facebook_wda/pdf/ios_automation_facebook_wda.pdf"
+    }
+  }
+}
