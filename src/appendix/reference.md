@@ -3,6 +3,8 @@
 * 【已解决】Mac中用facebook-wda自动化测试操作iOS设备
 * 【已解决】Mac中用facebook-wda操作iOS真机iPhone6
 * 【已解决】Mac中xcodebuild警告：xcode-select error tool xcodebuild requires Xcode
+* 【未解决】自动抓包iOS的app：左滑引导页进入首页
+* 【已解决】自动抓包工具适配iOS：当前检测出微信连续异常，你可以尝试一下方法修复 下一步
 * 
 * [crifan (Crifan Li)](https://github.com/crifan)
 * [【记录】给Gitbook添加更多配置和功能](http://www.crifan.com/gitbook_add_more_config_and_function)
