@@ -122,13 +122,13 @@ def swipeLeftGuideToMain(self):
 
 * 恒易贷
   * 第一页：
-    * ![hengyidai_left_guide_page_1](../assets/img/hengyidai_left_guide_page_1.jpg)
+    * ![hengyidai_left_guide_page_1](../../../assets/img/hengyidai_left_guide_page_1.jpg)
   * 最后一页：
-    * ![hengyidai_left_guide_page_3](../assets/img/hengyidai_left_guide_page_3.jpg)
+    * ![hengyidai_left_guide_page_3](../../../assets/img/hengyidai_left_guide_page_3.jpg)
 * 途虎养车
   * 第一页
-    * ![tuhucar_left_guide_3_1](../assets/img/tuhucar_left_guide_3_1.jpg)
+    * ![tuhucar_left_guide_3_1](../../../assets/img/tuhucar_left_guide_3_1.jpg)
   * 第二页
-    * ![tuhucar_left_guide_3_2](../assets/img/tuhucar_left_guide_3_2.jpg)
+    * ![tuhucar_left_guide_3_2](../../../assets/img/tuhucar_left_guide_3_2.jpg)
   * 第三页
-    * ![tuhucar_left_guide_3_3](../assets/img/tuhucar_left_guide_3_3.jpg)
+    * ![tuhucar_left_guide_3_3](../../../assets/img/tuhucar_left_guide_3_3.jpg)

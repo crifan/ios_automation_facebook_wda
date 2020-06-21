@@ -24,7 +24,23 @@
 
 * 初始化 = 第一次 = 首次 = 只需要做一次，以后无需重复做
 
-想要能自动化操作iPhone等iOS设备，需要先去给`iPhone`中安装：
+想要能自动化操作iPhone等iOS设备，需要
+
+（1）先确保Mac环境OK
+
+把相关后续要用到的工具都安装好：
+
+```bash
+brew update
+brew uninstall --ignore-dependencies libimobiledevice
+brew uninstall --ignore-dependencies usbmuxd
+brew install --HEAD usbmuxd
+brew unlink usbmuxd
+brew link usbmuxd
+brew install --HEAD libimobiledevice
+```
+
+（2）再去给`iPhone`中安装：
 
 * 客户端 = APP = `WebDriverAgentRunner-Runner`
   * 用于配合`Mac`中的`server端`的`test manager`

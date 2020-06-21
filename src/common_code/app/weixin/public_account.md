@@ -1,4 +1,6 @@
-# 微信相关
+# 微信公众号
+
+此处整理微信中关于微信公众号的部分的常见代码段。
 
 ## isPublicAccountSearchPage_iOS 判断是否处于微信公众号搜索页
 
@@ -228,191 +230,202 @@ def isCurPageInOffline_iOS(self, page):
     return isOffline
 ```
 
-## 当发生异常提示时，一直点击（多数都是 下一步），直到退出异常提示
+## findWeixinPublicAccountZhcnFullName 微信公众号搜索结果列表页 查找 微信公众号的中文（全）名
+
+对于页面：
+
+![search_result_dongkakongjian](../../../assets/img/search_result_dongkakongjian.jpg)
+
+![search_result_niuer](../../../assets/img/search_result_niuer.png)
+
+![search_result_limi](../../../assets/img/search_result_limi.png)
+
+从中查找出 公众号的中文名（的全称）
 
 ```python
-def iOSMakesureIntoWeixin(self):
-    """Makesure into weixin main page
-        if exception, process it, until into weixin page
+# def findWeixinPublicAccountZhcnSoup(self, soup, curAccountId):
+def findWeixinPublicAccountZhcnFullName(self, soup, curAccountId):
+    """Find weixin public account element's zh-CN full name
+
+    Args:
+        soup (soup): soup of current page xml
+    Returns:
+        public account zh-CN full name
+    Raises:
     """
-    # maxRetryNum = 3
-    maxRetryNum = 5
-    beInWeixin = self.iOSisInWeixin()
-
-    while (not beInWeixin) and (maxRetryNum > 0):
-        beInWeixin = self.iOSisInWeixin()
-        if not beInWeixin:
-            # try process for exception
-            foundAndProcessedException = self.iOSWeixinExceptionNextStep()
-            if foundAndProcessedException:
-                beInWeixin = self.iOSisInWeixin()
-
-        maxRetryNum -= 1
-
-    return beInWeixin
-
-def iOSWeixinExceptionNextStep(self):
-    foundAndClicked = False
-
-    scrollViewClassChain = "/XCUIElementTypeScrollView[`rect.width = %d AND rect.height = %d`]" % (self.X, self.totalY)
-
-    ButtonLabelNextStep = "下一步"
-    ButtonLabelIntoWeixin = "进入微信"
-
-    # nextStepButtonQuery = {"type":"XCUIElementTypeButton", "label": "下一步", "enabled": "true"}
-    # nextStepButtonQuery["parent_class_chains"] = [scrollViewClassChain]
-
-    # intoWeixinButtonQuery = {"type":"XCUIElementTypeButton", "label": "进入微信", "enabled": "true"}
-    # intoWeixinButtonQuery["parent_class_chains"] = [scrollViewClassChain]
+    # accountZhcnTextSoup = None
+    accountZhcnFullName = ""
+    parentNodeLocator = None
 
     """
-        <XCUIElementTypeScrollView type="XCUIElementTypeScrollView" enabled="true" visible="true" x="0" y="0" width="414" height="736">
-            <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="false" x="147" y="106" width="120" height="120"/>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="当前检测出微信连续异常，你可以尝试以下方法修复：" name="当前检测出微信连续异常，你可以尝试以下方法修复：" label="当前检测出微信连续异常，你可以尝试以下方法修复：" enabled="true" visible="true" x="18" y="262" width="378" height="39"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="下一步" label="下一步" enabled="true" visible="true" x="18" y="319" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="下一步" name="下一步" label="下一步" enabled="true" visible="true" x="179" y="331" width="56" height="23"/>
-            </XCUIElementTypeButton>
-        </XCUIElementTypeScrollView>
-    """
-    # continousExceptionQuery = {"type":"XCUIElementTypeStaticText", "value": "当前检测出微信连续异常，你可以尝试以下方法修复：", "enabled": "true"}
-    # continousExceptionQuery["parent_class_chains"] = [scrollViewClassChain]
-    # isFoundContinousException, respInfo = self.findElement(query=continousExceptionQuery, timeout=0.5)
-    # if isFoundContinousException:
-    #     isFoundNextStep, respInfo = self.findElement(query=nextStepButtonQuery)
-    #     if isFoundNextStep:
-    #         nextStepElement = respInfo
-    #         foundAndClicked = self.clickElement(nextStepElement)
+        搜索结果中文名节点是Text
+            <XCUIElementTypeOther type="XCUIElementTypeOther" name="搜一搜" label="搜一搜" enabled="true" visible="true" x="0" y="70" width="414" height="666">
+                <XCUIElementTypeOther type="XCUIElementTypeOther" value="2" name="公众号" label="公众号" enabled="true" visible="true" x="16" y="83" width="398" height="23">
+                    <XCUIElementTypeOther type="XCUIElementTypeOther" value="2" enabled="true" visible="true" x="16" y="83" width="52" height="23">
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="2" name="公众号" label="公众号" enabled="true" visible="true" x="16" y="83" width="52" height="22"/>
+                    </XCUIElementTypeOther>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" x="16" y="129" width="60" height="60"/>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="126" width="310" height="23">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="动卡空间" name="动卡空间" label="动卡空间" enabled="true" visible="true" x="88" y="126" width="70" height="22"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="151" width="310" height="21">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="分享用卡活动，传播正能量" name="分享用卡活动，传播正能量" label="分享用卡活动，传播正能量" enabled="true" visible="true" x="88" y="152" width="184" height="19"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="178" width="266" height="20">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="微信号：" name="微信号：" label="微信号：" enabled="true" visible="true" x="88" y="178" width="58" height="19"/>
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="gh_cfcfcee032cc" name="gh_cfcfcee032cc" label="gh_cfcfcee032cc" enabled="true" visible="true" x="145" y="178" width="112" height="19"/>
+                </XCUIElementTypeOther>
+        
+        搜索结果中文名节点是Other，其下是多个Text节点：
+            <XCUIElementTypeOther type="XCUIElementTypeOther" name="搜一搜" label="搜一搜" enabled="true" visible="true" x="0" y="70" width="375" height="600">
+                <XCUIElementTypeOther type="XCUIElementTypeOther" value="2" name="公众号" label="公众号" enabled="true" visible="true" x="16" y="83" width="359" height="23">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="2" name="公众号" label="公众号" enabled="true" visible="true" x="16" y="83" width="52" height="23"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" x="16" y="129" width="60" height="60"/>
+                <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="true" x="343" y="128" width="16" height="16"/>
+                <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="true" x="324" y="128" width="16" height="16"/>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="126" width="271" height="23">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="牛尔" name="牛尔" label="牛尔" enabled="true" visible="true" x="88" y="126" width="35" height="22"/>
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Tmall" name="Tmall" label="Tmall" enabled="true" visible="true" x="122" y="126" width="41" height="22"/>
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="旗舰店" name="旗舰店" label="旗舰店" enabled="true" visible="true" x="162" y="126" width="53" height="22"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="151" width="271" height="21">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="牛尔亲研天猫官方旗舰店" name="牛尔亲研天猫官方旗舰店" label="牛尔亲研天猫官方旗舰店" enabled="true" visible="true" x="88" y="152" width="169" height="19"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="178" width="271" height="19">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="微信号：" name="微信号：" label="微信号：" enabled="true" visible="true" x="88" y="178" width="58" height="18"/>
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="niuer-tmall" name="niuer-tmall" label="niuer-tmall" enabled="true" visible="true" x="145" y="178" width="70" height="18"/>
+                </XCUIElementTypeOther>
 
-    """
-        <XCUIElementTypeScrollView type="XCUIElementTypeScrollView" enabled="true" visible="true" x="0" y="0" width="414" height="736">
-            <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="false" x="147" y="106" width="120" height="120"/>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="建议你重启手机，避免微信启动异常" name="建议你重启手机，避免微信启动异常" label="建议你重启手机，避免微信启动异常" enabled="true" visible="true" x="18" y="262" width="378" height="15"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="重启手机" label="重启手机" enabled="true" visible="true" x="18" y="285" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="重启手机" name="重启手机" label="重启手机" enabled="true" visible="true" x="170" y="297" width="74" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="不重启手机，进入下一步" name="不重启手机，进入下一步" label="不重启手机，进入下一步" enabled="true" visible="true" x="18" y="356" width="378" height="15"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="下一步" label="下一步" enabled="true" visible="true" x="18" y="379" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="下一步" name="下一步" label="下一步" enabled="true" visible="true" x="179" y="391" width="56" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="垂直滚动条, 1页" label="垂直滚动条, 1页" enabled="true" visible="true" x="381" y="64" width="30" height="672"/>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="水平滚动条, 1页" label="水平滚动条, 1页" enabled="true" visible="true" x="0" y="703" width="414" height="30"/>
-        </XCUIElementTypeScrollView>
-    """
-    # # if not foundAndClicked:
-    # rebootWeixinQuery = {"type":"XCUIElementTypeStaticText", "value": "建议你重启手机，避免微信启动异常", "enabled": "true"}
-    # rebootWeixinQuery["parent_class_chains"] = [scrollViewClassChain]
-    # isFoundRebootWeixin, respInfo = self.findElement(query=rebootWeixinQuery, timeout=0.5)
-    # if isFoundRebootWeixin:
-    #     isFoundNextStep, respInfo = self.findElement(query=nextStepButtonQuery)
-    #     if isFoundNextStep:
-    #         nextStepElement = respInfo
-    #         foundAndClicked = self.clickElement(nextStepElement)
-    
-    """
-        <XCUIElementTypeScrollView type="XCUIElementTypeScrollView" enabled="true" visible="true" x="0" y="0" width="414" height="736">
-            <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="0" y="64" width="414" height="243">
-                <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="false" x="115" y="94" width="184" height="183"/>
-                <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="false" x="115" y="94" width="184" height="183"/>
+        公众号中文名全部是绿色的：
+            <XCUIElementTypeOther type="XCUIElementTypeOther" name="搜一搜" label="搜一搜" enabled="true" visible="true" x="0" y="70" width="414" height="666">
+                <XCUIElementTypeOther type="XCUIElementTypeOther" value="2" name="公众号" label="公众号" enabled="true" visible="true" x="16" y="83" width="398" height="23">
+                    <XCUIElementTypeOther type="XCUIElementTypeOther" value="2" enabled="true" visible="true" x="16" y="83" width="52" height="23">
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="2" name="公众号" label="公众号" enabled="true" visible="true" x="16" y="83" width="52" height="22"/>
+                    </XCUIElementTypeOther>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" x="16" y="129" width="60" height="60"/>
+                <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="true" x="382" y="128" width="16" height="16"/>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="126" width="310" height="23">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="limi里美" name="limi里美" label="limi里美" enabled="true" visible="true" x="88" y="126" width="61" height="22"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="151" width="310" height="21">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="真实好成分，呵护少女肌。" name="真实好成分，呵护少女肌。" label="真实好成分，呵护少女肌。" enabled="true" visible="true" x="88" y="152" width="184" height="19"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="88" y="178" width="310" height="19">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="微信号：" name="微信号：" label="微信号：" enabled="true" visible="true" x="88" y="178" width="58" height="18"/>
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="limi_official" name="limi_official" label="limi_official" enabled="true" visible="true" x="145" y="178" width="72" height="18"/>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" x="0" y="0" width="0" height="0"/>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="0" y="237" width="414" height="25">
+                    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="没有更多的搜索结果" name="没有更多的搜索结果" label="没有更多的搜索结果" enabled="true" visible="true" x="133" y="239" width="148" height="20"/>
+                </XCUIElementTypeOther>
             </XCUIElementTypeOther>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="清理缓存会清理你的手机本地缓存文件，但不会清理你的消息数据，使用后需要重新登录微信" name="清理缓存会清理你的手机本地缓存文件，但不会清理你的消息数据，使用后需要重新登录微信" label="清理缓存会清理你的手机本地缓存文件，但不会清理你的消息数据，使用后需要重新登录微信" enabled="true" visible="true" x="18" y="330" width="378" height="29"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="清理缓存" label="清理缓存" enabled="true" visible="true" x="18" y="367" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="清理缓存" name="清理缓存" label="清理缓存" enabled="true" visible="true" x="170" y="379" width="74" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="不清理缓存，进入下一步" name="不清理缓存，进入下一步" label="不清理缓存，进入下一步" enabled="true" visible="true" x="18" y="438" width="378" height="15"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="下一步" label="下一步" enabled="true" visible="true" x="18" y="461" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="下一步" name="下一步" label="下一步" enabled="true" visible="true" x="179" y="473" width="56" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="垂直滚动条, 1页" label="垂直滚动条, 1页" enabled="true" visible="true" x="381" y="64" width="30" height="672"/>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="水平滚动条, 1页" label="水平滚动条, 1页" enabled="true" visible="true" x="0" y="703" width="414" height="30"/>
-        </XCUIElementTypeScrollView>
     """
-    # # if not foundAndClicked:
-    # clearCacheQuery = {"type":"XCUIElementTypeStaticText", "value": "清理缓存会清理你的手机本地缓存文件，但不会清理你的消息数据，使用后需要重新登录微信", "enabled": "true"}
-    # clearCacheQuery["parent_class_chains"] = [scrollViewClassChain]
-    # isFoundClearCache, respInfo = self.findElement(query=clearCacheQuery, timeout=0.5)
-    # if isFoundClearCache:
-    #     isFoundNextStep, respInfo = self.findElement(query=nextStepButtonQuery)
-    #     if isFoundNextStep:
-    #         nextStepElement = respInfo
-    #         foundAndClicked = self.clickElement(nextStepElement)
-    
-    """
-        <XCUIElementTypeScrollView type="XCUIElementTypeScrollView" enabled="true" visible="true" x="0" y="0" width="414" height="736">
-            <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="false" x="147" y="106" width="120" height="120"/>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="如果问题还没解决，你可以上传手机日志文件，协助技术人员解决问题。所上传的文件不会包含聊天记录等私人内容，且不会被对外传播" name="如果问题还没解决，你可以上传手机日志文件，协助技术人员解决问题。所上传的文件不会包含聊天记录等私人内容，且不会被对外传播" label="如果问题还没解决，你可以上传手机日志文件，协助技术人员解决问题。所上传的文件不会包含聊天记录等私人内容，且不会被对外传播" enabled="true" visible="true" x="18" y="262" width="378" height="29"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="上传文件" label="上传文件" enabled="true" visible="true" x="18" y="298" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="上传文件" name="上传文件" label="上传文件" enabled="true" visible="true" x="170" y="310" width="74" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="显示上传文件列表" label="显示上传文件列表" enabled="true" visible="true" x="17" y="353" width="100" height="15">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="显示上传文件列表" name="显示上传文件列表" label="显示上传文件列表" enabled="true" visible="true" x="17" y="352" width="100" height="16"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="不上传文件，进入下一步" name="不上传文件，进入下一步" label="不上传文件，进入下一步" enabled="true" visible="true" x="18" y="391" width="378" height="15"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="下一步" label="下一步" enabled="true" visible="true" x="18" y="413" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="下一步" name="下一步" label="下一步" enabled="true" visible="true" x="179" y="425" width="56" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="垂直滚动条, 1页" label="垂直滚动条, 1页" enabled="true" visible="true" x="381" y="64" width="30" height="672"/>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="水平滚动条, 1页" label="水平滚动条, 1页" enabled="true" visible="true" x="0" y="703" width="414" height="30"/>
-        </XCUIElementTypeScrollView>
-    """
+    foundAccountId = soup.find(
+        'XCUIElementTypeStaticText',
+        attrs={"value": curAccountId, "name": curAccountId, "type": "XCUIElementTypeStaticText"},
+    )
+    logging.debug("foundAccountId=%s", foundAccountId)
+    # foundAccountId=<XCUIElementTypeStaticText enabled="true" height="18" label="gh_cfcfcee032cc" name="gh_cfcfcee032cc" type="XCUIElementTypeStaticText" value="gh_cfcfcee032cc" visible="true" width="112" x="145" y="178"/>
+    if foundAccountId:
+        idParent = foundAccountId.parent
+        logging.debug("idParent=%s", idParent)
+        if idParent:
+            # method 1: two prev.prev
+            # # idParentPrev = idParent.previous_sibling
+            # idParentPrev = idParent.previous_sibling.previous_sibling
+            # accountDescNode = idParentPrev
+            # logging.info("accountDescNode=%s", accountDescNode) # '\n'
+            # if accountDescNode:
+            #     # accountZhcnNode = accountDescNode.previous_sibling
+            #     accountZhcnNode = accountDescNode.previous_sibling.previous_sibling
+            #     logging.info("accountZhcnNode=%s", accountZhcnNode)
 
-    """
-        <XCUIElementTypeScrollView type="XCUIElementTypeScrollView" enabled="true" visible="true" x="0" y="0" width="414" height="736">
-            <XCUIElementTypeImage type="XCUIElementTypeImage" enabled="true" visible="false" x="147" y="106" width="120" height="120"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" enabled="true" visible="true" x="147" y="106" width="120" height="120"/>
-            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="如果使用过程中还出现问题，建议你重启手机，更新系统，或者联系我们的客服人员。 当前设备标识：7a3e060db5c52291******" name="如果使用过程中还出现问题，建议你重启手机，更新系统，或者联系我们的客服人员。 当前设备标识：7a3e060db5c52291******" label="如果使用过程中还出现问题，建议你重启手机，更新系统，或者联系我们的客服人员。 当前设备标识：7a3e060db5c52291******" enabled="true" visible="true" x="18" y="262" width="378" height="58"/>
-            <XCUIElementTypeButton type="XCUIElementTypeButton" name="进入微信" label="进入微信" enabled="true" visible="true" x="18" y="338" width="378" height="47">
-                <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="进入微信" name="进入微信" label="进入微信" enabled="true" visible="true" x="170" y="350" width="74" height="23"/>
-            </XCUIElementTypeButton>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="垂直滚动条, 1页" label="垂直滚动条, 1页" enabled="true" visible="true" x="381" y="64" width="30" height="672"/>
-            <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="水平滚动条, 1页" label="水平滚动条, 1页" enabled="true" visible="true" x="0" y="703" width="414" height="30"/>
-        </XCUIElementTypeScrollView>
-    """
+            # # method 2: siblings[-2] of XCUIElementTypeOther
+            # idParentPrevSiblingList = idParent.previous_siblings
 
-    EachStepNoticeList = [
-        # ("当前检测出微信连续异常，你可以尝试以下方法修复：", ButtonLabelNextStep),
-        ("当前检测出微信连续异常", ButtonLabelNextStep),
-        ("建议你重启手机，避免微信启动异常", ButtonLabelNextStep),
-        ("清理缓存会清理你的手机本地缓存文件，但不会清理你的消息数据，使用后需要重新登录微信", ButtonLabelNextStep),
-        ("如果问题还没解决，你可以上传手机日志文件，协助技术人员解决问题。所上传的文件不会包含聊天记录等私人内容，且不会被对外传播", ButtonLabelNextStep),
-        ("如果使用过程中还出现问题，建议你重启手机，更新系统，或者联系我们的客服人员。", ButtonLabelIntoWeixin),
-    ]
-    for (curStepNotice, buttonLabel) in EachStepNoticeList:
-        # curNoticeQuery = {"type":"XCUIElementTypeStaticText", "value": curStepNotice, "enabled": "true"}
-        # curNoticeQuery = {"type":"XCUIElementTypeStaticText", "value_part": curStepNotice, "enabled": "true"}
-        curNoticeQuery = {"type":"XCUIElementTypeStaticText", "valueContains": curStepNotice, "enabled": "true"}
-        curNoticeQuery["parent_class_chains"] = [scrollViewClassChain]
-        isFoundCurNotice, respInfo = self.findElement(query=curNoticeQuery, timeout=0.5)
-        if isFoundCurNotice:
-            # isFoundNextStep, respInfo = self.findElement(query=nextStepButtonQuery)
-            # isFoundButton, respInfo = self.findElement(query=buttonQuery)
-            buttonQuery = {"type":"XCUIElementTypeButton", "label": buttonLabel, "enabled": "true"}
-            buttonQuery["parent_class_chains"] = [scrollViewClassChain]
-            isFoundButton, respInfo = self.findElement(query=buttonQuery)
-            if isFoundButton:
-                buttonElement = respInfo
-                clickOk = self.clickElement(buttonElement)
-                if clickOk:
-                    foundAndClicked = clickOk
+            # accountDescNode = None
+            # accountZhcnNode = None
 
-    return foundAndClicked
+            # TypeOther = "XCUIElementTypeOther"
+            # typeOtherNodeCurIdx = 0
+            # AccountDescNodeIdx = 1
+            # AccountZhcnNodeIdx = 2
+
+            # for eachPrevSiblingNode in idParentPrevSiblingList:
+            #     curNodeName = eachPrevSiblingNode.name
+            #     isTypeOtherNode = curNodeName == TypeOther
+            #     if isTypeOtherNode:
+            #         typeOtherNodeCurIdx += 1
+
+            #         if AccountDescNodeIdx == typeOtherNodeCurIdx:
+            #             accountDescNode = eachPrevSiblingNode
+            #         elif AccountZhcnNodeIdx == typeOtherNodeCurIdx:
+            #             accountZhcnNode = eachPrevSiblingNode
+                
+            #     hasFoundAll = accountDescNode and accountZhcnNode
+            #     if hasFoundAll:
+            #         break
+            
+            # logging.info("accountDescNode=%s", accountDescNode)
+            # logging.info("accountZhcnNode=%s", accountZhcnNode)
+
+            # if accountZhcnNode:
+            #     accountZhcnTextSoup = accountZhcnNode.find(
+            #         'XCUIElementTypeStaticText',
+            #         attrs={ "type": "XCUIElementTypeStaticText"},
+            #     )
+
+            # method 3: parent'parent is 搜一搜, direct child 2nd XCUIElementTypeOther of enabled="true" visible="true"
+            idParentParent = idParent.parent
+            if idParentParent:
+                otherSoupList = idParentParent.find_all(
+                    "XCUIElementTypeOther",
+                    attrs={"type": "XCUIElementTypeOther", "enabled":"true", "visible":"true"},
+                    recursive=False,
+                )
+                if otherSoupList and (len(otherSoupList) >= 2):
+                    firstOtherSoup = otherSoupList[0]
+                    if firstOtherSoup.attrs["name"] == "公众号":
+                        secondOtherSoup = otherSoupList[1]
+                        zhcnNameSoupList = secondOtherSoup.find_all(
+                            "XCUIElementTypeStaticText",
+                            attrs={"type": "XCUIElementTypeStaticText", "enabled":"true", "visible":"true"},
+                        )
+                        if zhcnNameSoupList:
+                            for eachTextSoup in zhcnNameSoupList:
+                                curPartName = eachTextSoup.attrs.get("value")
+                                accountZhcnFullName += curPartName
+                            
+                            if accountZhcnFullName:
+                                secondOtherAttrDict = secondOtherSoup.attrs
+                                parentX = secondOtherAttrDict["x"]
+                                parentY = secondOtherAttrDict["y"]
+                                parentWidth = secondOtherAttrDict["width"]
+                                parentHeight = secondOtherAttrDict["height"]
+                                parentNodeLocator = {
+                                    "type": "XCUIElementTypeOther",
+                                    "enabled": "true",
+                                    "visible": "true",
+                                    "x": parentX,
+                                    "y": parentY,
+                                    "width": parentWidth,
+                                    "height": parentHeight,
+                                }
+
+    # return accountZhcnTextSoup
+    # return accountZhcnFullName
+    return accountZhcnFullName, parentNodeLocator
 ```
 
-说明：
+调用举例：
 
-通过wda多次调试iOS微信，会导致退出再打开，时不时的会出现异常提示
+```python
+curAccountId = "gh_cfcfcee032cc"
+curPageXml = self.get_page_source()
+soup = CommonUtils.xmlToSoup(curPageXml)
 
-希望一直点击，直到提示消失
-
-![weixin_detect_exception](../assets/img/weixin_detect_exception.png)
-
-![need_reboot_computer](../assets/img/need_reboot_computer.png)
-
-![clear_cache_next_step](../assets/img/clear_cache_next_step.png)
-
-![upload_file_next_step](../assets/img/upload_file_next_step.png)
-
-![finnal_into_weixin](../assets/img/finnal_into_weixin.png)
-
-详见：
-
-【已解决】自动抓包工具适配iOS：当前检测出微信连续异常，你可以尝试一下方法修复 下一步
+accountZhcnName, parentNodeLocator = self.findWeixinPublicAccountZhcnFullName(soup, curAccountId)
+```
