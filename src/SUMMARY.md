@@ -16,6 +16,7 @@
     * [app管理](common_code/app/manage_app.md)
     * [首次登录引导页](common_code/app/first_run_guide.md)
     * [微信](common_code/app/weixin/README.md)
+      * [安全模式](common_code/app/weixin/safe_mode.md)
       * [微信公众号](common_code/app/weixin/public_account.md)
     * [设置](common_code/app/settings/README.md)
       * [更新WiFi代理](common_code/app/settings/update_wifi_proxy.md)

@@ -1,6 +1,6 @@
 {
   "latestVersion": "v1.3",
-  "lastUpdate": "20200621",
+  "lastUpdate": "20200625",
   "gitRepoName": "ios_automation_facebook_wda",
   "bookName": "iOS自动化测试利器：facebook-wda",
   "bookDescription": "总结iOS自动化主流框架facebook-wda的简介，环境搭建以及常见问题，以及开发的心得，尤其是iOS的各种坑，以及常用代码段，并给出部分源码分析，最后附上文档和参考资料。"
