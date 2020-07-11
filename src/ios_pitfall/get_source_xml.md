@@ -1,6 +1,6 @@
 # 获取源码xml
 
-iOS中最大的坑，就是获取页面源码xml期间，遇到的各种问题。
+iOS中最大的坑，就是**获取页面源码**`xml`期间，遇到的各种问题。
 
 ## 坑：即使查询条件和xml中内容正确匹配，也查询不到
 
@@ -402,7 +402,7 @@ Appium的实现方式都是，想办法用第三方工具class-dump，RuntimeBro
 
 其中iOS 11的iPhone6P获取源码期间，test manager能看到错误log
 
-```log
+```bash
     t =  4793.27s Find: Identity Binding
 2020-04-29 10:26:17.325280+0800 WebDriverAgentRunner-Runner[1017:316917] Cannot take the snapshot of Window after 65 seconds
 2020-04-29 10:26:17.325547+0800 WebDriverAgentRunner-Runner[1017:316917] Internal error: Error Domain=com.apple.dt.xctest.automation-support.error Code=5 "Error -25216 getting snapshot for element <AXUIElementRef 0x10ddae470> {pid=1148} {uid=[ID:9999 hash:0xf22fd45800000000]}" UserInfo={NSLocalizedDescription=Error -25216 getting snapshot for element <AXUIElementRef 0x10ddae470> {pid=1148} {uid=[ID:9999 hash:0xf22fd45800000000]}}

@@ -1,6 +1,6 @@
 # iOS的各种坑
 
-在用`facebook-wda`+`WebDriverAgent`去自动化测试iOS设备期间，遇到各种坑。
+在用`facebook-wda`+`WebDriverAgent`去自动化测试iOS设备期间，遇到各种**坑**。
 
 其中多数坑，都是苹果官方的API不稳定或有bug导致的，少数是`WebDriverAgent`或`facebook-wda`的。
 
@@ -587,7 +587,7 @@ query查询条件中，加了visible：
 
 就找不到，log是：
 
-```log
+```bash
 [200430 17:00:39][__init__.py 164] Shell: curl -X POST -d '{"using": "class chain", "value": "**/XCUIElementTypeButton[`name == '\u725b\u5c14\u5929\u732b' AND label == '\u725b\u5c14\u5929\u732b' AND enabled == 1 AND visible == 1 AND rect.x == 44 AND rect.y == 617 AND rect.width == 111 AND rect.height == 49`]"}' 'http://localhost:8100/session/E91B12B7-E999-4945-BD4F-57E818C91EA4/element'
 [200430 17:00:39][connectionpool.py 221] Starting new HTTP connection (1): localhost:8100
 [200430 17:00:40][connectionpool.py 428] http://localhost:8100 "POST /session/E91B12B7-E999-4945-BD4F-57E818C91EA4/element HTTP/1.1" 404 6971
