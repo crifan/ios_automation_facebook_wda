@@ -412,7 +412,7 @@ class Client(object):
 
         Args:
             png_filename(string): optional, save file name
-            format(string): return format, "raw" or "pillow” (default)
+            format(string): return format, "raw" or "pillow" (default)
         
         Returns:
             PIL.Image or raw png data
