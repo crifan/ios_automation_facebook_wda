@@ -16,7 +16,7 @@ xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer dire
     * 文字
       * `Xcode`->`设置`->`Locations`->`Command Line Tools`，默认是**空**，下拉选择`Xcode 11.3.1(11C504)`
     * 截图
-      * ![xcode_locations_command_line_tools](../../assets/img/xcode_locations_command_line_tools.png)
+      * ![xcode_locations_command_line_tools](../assets/img/xcode_locations_command_line_tools.png)
 
 安装后，即可查看版本信息：
 
@@ -153,4 +153,4 @@ mobiledevice tunnel 8100 8100
 }
 ```
 
-![wda_status_response](../../assets/img/wda_status_response.png)
+![wda_status_response](../assets/img/wda_status_response.png)
