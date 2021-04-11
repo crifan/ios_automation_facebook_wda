@@ -116,24 +116,31 @@ drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 test
 ### 启动test manager服务
 
 * `server`=`服务端`=`test manager`=`WebDriverAgent的服务`
-    * 需要在`Mac`中启动`test manager`
-        * 2种方式
-            * XCode
-              * `Xcode`->`Product`->`Test`
-            * 终端
-              * `Terminal`中：运行`xcodebuild`的`test`
-                  * 直接一步：
-                      * ```xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=`idevice_id -l | head -n1`" test```
-                  * 或分2步
-                      * 先获取iOS设备的UDID：
-                          * `CUR_UDID=$(idevice_id -l | head -n1)`
-                      * 再运行：
-                          * `xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=$CUR_UDID" test`
-                  * 注：
-                    * 要在`WebDriverAgent`的目录中运行上述命令
-                    * `idevice_id -l`作用是列出当前连接到Mac中的所有iOS的设备（的UDID）
-                      * 详见：[idevice_id](https://book.crifan.com/books/apple_develop_summary/website/desktop/idevice_id.html)
-                    * `head -n1`作用是获取第一个（iOS设备的UDID）
+  * 需要在`Mac`中启动`test manager`
+    * 2种方式
+      * XCode
+        * `Xcode`->`Product`->`Test`
+          * ![xcode_test_serverurlhere](../assets/img/xcode_test_serverurlhere.jpg)
+      * 终端
+        * `Terminal`中：运行`xcodebuild`的`test`
+          * 直接一步：
+            ```bash
+            xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=`idevice_id -l | head -n1`" test
+            ```
+          * 或分2步
+            * 先获取iOS设备的UDID：
+              ```bash
+              CUR_UDID=$(idevice_id -l | head -n1)
+              ```
+            * 再运行：
+              ```bash
+              xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=$CUR_UDID" test
+              ```
+          * 注：
+            * 要在`WebDriverAgent`的目录中运行上述命令
+            * `idevice_id -l`作用是列出当前连接到Mac中的所有iOS的设备（的UDID）
+              * 详见：[idevice_id](https://book.crifan.com/books/apple_develop_summary/website/desktop/idevice_id.html)
+            * `head -n1`作用是获取第一个（iOS设备的UDID）
 
 最后能看到输出`ServerURLHere`和`Using singleton test manager`：
 
@@ -148,3 +155,77 @@ Test Case '-[UITestingUITests testRunner]' started.
 ```
 
 即表示正常启动了`test manager`= `WDA的server` 了。
+
+### 如何确认`test manager`服务已正常运行
+
+可以去访问运行了`test manager`最后所输出的地址：
+
+`http://192.168.31.43:8100`
+
+加上`status`后是：
+
+`http://192.168.31.43:8100/status`
+
+会输出当前状态信息：
+
+```json
+{
+    "value": {
+        "message": "WebDriverAgent is ready to accept commands",
+        "state": "success",
+        "os": {
+            "name": "iOS",
+            "version": "12.4.5",
+            "sdkVersion": "13.0"
+        },
+        "ios": {
+            "simulatorVersion": "12.4.5",
+            "ip": "192.168.31.43"
+        },
+        "ready": true,
+        "build": {
+            "time": "Feb 20 2020 10:50:08",
+            "productBundleIdentifier": "com.facebook.WebDriverAgentRunner"
+        }
+    },
+    "sessionId": "38289A64-E467-4458-A0F1-8A3B2A6AAECE"
+}
+```
+
+![wda_status_response](../assets/img/wda_status_response.png)
+
+### USB端口转发
+
+为了测试更方便，最好安装和启动端口转发
+
+以及，如果通过IP地址访问：`http://192.168.31.43:8100/status`，无法显示，则可以，换用端口转发
+
+具体方式是，用`iproxy`或`mobiledevice`实现，把访问Mac本地的端口，转发到USB连接着的iOS设备中
+
+命令：
+
+对于只连接单个iOS设备，比如某个iPhone的话，只需要：
+
+```bash
+iproxy 8100 8100
+```
+
+或：
+
+```bash
+mobiledevice tunnel 8100 8100
+```
+
+更多解释和用法，详见：
+
+[端口转发 · 苹果相关开发总结](https://book.crifan.com/books/apple_develop_summary/website/desktop/port_forward.html)
+
+> #### success:: 如果已端口转发则可以把IP换localhost
+> 
+> 此时`status`的地址就是，把IP换成localhost：
+> 
+> `http://localhost:8100/status`
+> 
+> 即可正常显示，返回状态信息：
+> 
+> ![wda_status_localhost_resp](../assets/img/wda_status_localhost_resp.png)

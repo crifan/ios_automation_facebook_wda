@@ -1,11 +1,11 @@
 # iOS自动化测试利器：facebook-wda
 
-* 最新版本：`v1.4`
-* 更新时间：`20200711`
+* 最新版本：`v1.6`
+* 更新时间：`20210411`
 
 ## 简介
 
-总结iOS自动化主流框架facebook-wda的简介，环境搭建以及常见问题，以及开发的心得，尤其是iOS的各种坑，以及常用代码段，并给出部分源码分析，最后附上文档和参考资料。
+总结iOS自动化主流框架facebook-wda的简介，环境搭建，包括安装依赖库、编译WebDriverAgentRunner、安装WebDriverAgentRunner-Runner、启动test manager等，以及常见问题，包括USB端口转发、，以及开发的心得，尤其是iOS的各种坑，以及常用代码段，并给出部分源码分析，最后附上文档和参考资料。
 
 ## 源码+浏览+下载
 
@@ -37,3 +37,9 @@
 ## 鸣谢
 
 感谢我的老婆**陈雪**的包容理解和悉心照料，才使得我`crifan`有更多精力去专注技术专研和整理归纳出这些电子书和技术教程，特此鸣谢。
+
+## 更多其他电子书
+
+本人`crifan`还写了其他`100+`本电子书教程，感兴趣可移步至：
+
+[crifan/crifan_ebook_readme: Crifan的电子书的使用说明](https://github.com/crifan/crifan_ebook_readme)

@@ -9,7 +9,7 @@
 ## crifan版wda源码
 
 * 在线下载：
-  * [crifan版wda __init__.py](https://book.crifan.com/books/ios_automation_facebook_wda/website/assets/crifan_wda__init__.py)
+  * [crifan版wda `__init__.py`](https://book.crifan.com/books/ios_automation_facebook_wda/website/assets/file/crifan_wda__init__.py)
 * 直接贴出源码：
 
 ```python

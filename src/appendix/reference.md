@@ -34,6 +34,12 @@
 * 【已解决】WebDriverAgent报错：Internal error Error Domain com.apple.dt.xctest.automation-support.error Code 5 Error kAXErrorServerNotFound getting snapshot for element
 * 【已解决】WebDriverAgent中fb_waitUntilSnapshotIsStable的作用和含义即为何加上
 * 【已解决】WebDriverAgent获取源码慢尝试调节参数：FB_ANIMATION_TIMEOUT
+* 【已解决】Mac中安装和初始化facebook-wda环境
+* 【已解决】Mac中XCode如何编译WebDriverAgent.xcodeproj
+* 【已解决】用XCode给WebDriverAgent.xcodeproj的WebDriverAgentRunner添加设置code signing代码签名
+* 【已解决】Mac中XCode中WebDriverAgent编译报错：Signing for IntegrationApp requires a development team
+* 【已解决】XCode中WebDriverAgent.xcodeproj自动签名报错：Failed to register bundle identifier com.facebook.WebDriverAgentRunner
+* 【已解决】XCode 11中如何修改WebDriverAgentRunner的bundle identifier
 * 
 * [crifan (Crifan Li)](https://github.com/crifan)
 * [【记录】给Gitbook添加更多配置和功能](http://www.crifan.com/gitbook_add_more_config_and_function)

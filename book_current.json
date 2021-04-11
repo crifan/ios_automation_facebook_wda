@@ -1,6 +1,6 @@
 {
   "title": "iOS自动化测试利器：facebook-wda",
-  "description": "总结iOS自动化主流框架facebook-wda的简介，环境搭建以及常见问题，以及开发的心得，尤其是iOS的各种坑，以及常用代码段，并给出部分源码分析，最后附上文档和参考资料。",
+  "description": "总结iOS自动化主流框架facebook-wda的简介，环境搭建，包括安装依赖库、编译WebDriverAgentRunner、安装WebDriverAgentRunner-Runner、启动test manager等，以及常见问题，包括USB端口转发、，以及开发的心得，尤其是iOS的各种坑，以及常用代码段，并给出部分源码分析，最后附上文档和参考资料。",
   "pluginsConfig": {
     "github-buttons": {
       "buttons": [
