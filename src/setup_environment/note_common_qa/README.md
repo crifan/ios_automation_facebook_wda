@@ -89,3 +89,74 @@ xcodebuild: error: missing value for key 'id' of option 'Destination'
         activeProxiedDevice:       (null)
         } (12.4.5 (16G161))
 ```
+<<<<<<< HEAD:src/setup_environment/note_common_qa/README.md
+=======
+
+### USB端口转发
+
+为了测试更方便，最好安装和启动端口转发
+
+具体方式是，用`iproxy`或`mobiledevice`实现，把访问Mac本地的端口，转发到USB连接着的iOS设备中
+
+命令：
+
+对于只连接单个iOS设备，比如某个iPhone的话，只需要：
+
+```bash
+iproxy 8100 8100
+```
+
+或：
+
+```bash
+mobiledevice tunnel 8100 8100
+```
+
+更多解释和用法，详见：
+
+[端口转发 · 苹果相关开发总结](https://book.crifan.com/books/apple_develop_summary/website/desktop/port_forward.html)
+
+### 如何确认`test manager`服务已正常运行
+
+可以去访问运行了`test manager`最后所输出的地址：
+
+`http://192.168.31.43:8100`
+
+加上`status`后是：
+
+`http://192.168.31.43:8100/status`
+
+> #### success:: 如果已端口转发则可以把IP换localhost
+> 
+> 如果用了端口转发，则可以把IP换成localhost：
+> 
+> `http://localhost:8100/status`
+
+会输出当前状态信息：
+
+```json
+{
+    "value": {
+        "message": "WebDriverAgent is ready to accept commands",
+        "state": "success",
+        "os": {
+            "name": "iOS",
+            "version": "12.4.5",
+            "sdkVersion": "13.0"
+        },
+        "ios": {
+            "simulatorVersion": "12.4.5",
+            "ip": "192.168.31.43"
+        },
+        "ready": true,
+        "build": {
+            "time": "Feb 20 2020 10:50:08",
+            "productBundleIdentifier": "com.facebook.WebDriverAgentRunner"
+        }
+    },
+    "sessionId": "38289A64-E467-4458-A0F1-8A3B2A6AAECE"
+}
+```
+
+![wda_status_response](../assets/img/wda_status_response.png)
+>>>>>>> fc5ffddde542c39bfa74b9da1f24a029c7050f33:src/setup_environment/note_common_qa.md
