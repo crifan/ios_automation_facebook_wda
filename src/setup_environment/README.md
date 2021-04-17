@@ -120,7 +120,6 @@ drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 test
     * 2种方式
       * XCode
         * `Xcode`->`Product`->`Test`
-          * ![xcode_test_serverurlhere](../assets/img/xcode_test_serverurlhere.jpg)
       * 终端
         * `Terminal`中：运行`xcodebuild`的`test`
           * 直接一步：
@@ -153,6 +152,11 @@ Test Case '-[UITestingUITests testRunner]' started.
 2020-02-20 10:51:00.119667+0800 WebDriverAgentRunner-Runner[460:142725] ServerURLHere->http://192.168.31.43:8100<-ServerURLHere
 2020-02-20 10:51:00.123946+0800 WebDriverAgentRunner-Runner[460:142853] Using singleton test manager
 ```
+
+* XCode
+  * ![xcode_test_serverurlhere](../assets/img/xcode_test_serverurlhere.jpg)
+* xcodebuild
+  * ![xcodebuild_running_serverurlhere](../assets/img/xcodebuild_running_serverurlhere.png)
 
 即表示正常启动了`test manager`= `WDA的server` 了。
 
