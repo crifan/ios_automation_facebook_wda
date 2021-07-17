@@ -40,7 +40,25 @@ brew link usbmuxd
 brew install --HEAD libimobiledevice
 ```
 
-（2）再去给`iPhone`中安装：
+再去安装wda的库：
+
+```bash
+pip install facebook-wda
+```
+
+（2）再去给`iPhone`中安装相关内容
+
+先确保iPhone已正常连接：
+
+把iOS设备（iPhone等）插入Mac后，用
+
+```bash
+idevice_id -l
+```
+
+确保可以找到iPhone设备。
+
+再去给iPhone中安装：
 
 * 客户端 = APP = `WebDriverAgentRunner-Runner`
   * 用于配合`Mac`中的`server端`的`test manager`
@@ -71,41 +89,18 @@ git clone https://github.com/appium/WebDriverAgent.git
 cd WebDriverAgent
 ```
 
-看到相关文件：
-
-```bash
- ll
-total 96
--rw-r--r--   1 limao  CORP\Domain Users   2.0K  2 13 17:40 CONTRIBUTING.md
--rw-r--r--   1 limao  CORP\Domain Users   111B  2 13 17:40 Cartfile
--rw-r--r--   1 limao  CORP\Domain Users    75B  2 13 17:40 Cartfile.resolved
-drwxr-xr-x   3 limao  CORP\Domain Users    96B  2 13 17:40 Configurations
-drwxr-xr-x   4 limao  CORP\Domain Users   128B  2 13 17:40 Fastlane
--rw-r--r--   1 limao  CORP\Domain Users   177B  2 13 17:40 Gemfile
--rw-r--r--   1 limao  CORP\Domain Users   4.3K  2 13 17:40 Gemfile.lock
--rw-r--r--   1 limao  CORP\Domain Users   1.5K  2 13 17:40 LICENSE
--rw-r--r--   1 limao  CORP\Domain Users   1.9K  2 13 17:40 PATENTS
-drwxr-xr-x   7 limao  CORP\Domain Users   224B  2 13 17:40 PrivateHeaders
--rw-r--r--   1 limao  CORP\Domain Users   2.5K  2 13 17:40 README.md
-drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 Scripts
-drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 WebDriverAgent.xcodeproj
-drwxr-xr-x  16 limao  CORP\Domain Users   512B  2 13 17:40 WebDriverAgentLib
-drwxr-xr-x   4 limao  CORP\Domain Users   128B  2 13 17:40 WebDriverAgentRunner
-drwxr-xr-x   6 limao  CORP\Domain Users   192B  2 13 17:40 WebDriverAgentTests
-drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 ci-jobs
--rw-r--r--   1 limao  CORP\Domain Users   666B  2 13 17:40 gulpfile.js
--rw-r--r--   1 limao  CORP\Domain Users   896B  2 13 17:40 index.js
-drwxr-xr-x   9 limao  CORP\Domain Users   288B  2 13 17:40 lib
--rw-r--r--   1 limao  CORP\Domain Users   2.5K  2 13 17:40 package.json
-drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 test
-```
-
-其中核心的入口文件，即Xcode项目文件是：`WebDriverAgent.xcodeproj`
+可以看到核心的入口文件，即Xcode项目文件：`WebDriverAgent.xcodeproj`
 
 关于如何编译和安装，则有2种方式：
 
 * 通过IDE`XCode`去编译和安装
   * `Xcode`->`Product`->`Test`
+    * 注：准备工作包括
+      * 用`XCode`打开`WebDriverAgent.xcodeproj`
+      * 选择`Target`的APP是：`WebDriverAgentRunner`
+      * 去选择`Team`，是自己（或别的可用的）`开发者账号`
+      * 会触发自动`Code Signing`
+      * 最后才是：`Product`->`Test`
 * 在`终端`运行`xcodebuild`命令去编译和安装
   * `Terminal`中：运行`xcodebuild`的`test`
 
@@ -116,35 +111,71 @@ drwxr-xr-x   5 limao  CORP\Domain Users   160B  2 13 17:40 test
 ### 启动test manager服务
 
 * `server`=`服务端`=`test manager`=`WebDriverAgent的服务`
-    * 需要在`Mac`中启动`test manager`
-        * 2种方式
-            * XCode
-              * `Xcode`->`Product`->`Test`
-            * 终端
-              * `Terminal`中：运行`xcodebuild`的`test`
-                  * 直接一步：
-                      * ```xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=`idevice_id -l | head -n1`" test```
-                  * 或分2步
-                      * 先获取iOS设备的UDID：
-                          * `CUR_UDID=$(idevice_id -l | head -n1)`
-                      * 再运行：
-                          * `xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=$CUR_UDID" test`
-                  * 注：
-                    * 要在`WebDriverAgent`的目录中运行上述命令
-                    * `idevice_id -l`作用是列出当前连接到Mac中的所有iOS的设备（的UDID）
-                      * 详见：[idevice_id](https://book.crifan.com/books/apple_develop_summary/website/desktop/idevice_id.html)
-                    * `head -n1`作用是获取第一个（iOS设备的UDID）
+  * 需要在`Mac`中启动`test manager`
+    * 2种方式
+      * XCode
+        * `Xcode`->`Product`->`Test`
+      * 终端
+        * `Terminal`中：运行`xcodebuild`的`test`
+          * 直接一步：
+            ```bash
+            xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=`idevice_id -l | head -n1`" test
+            ```
+          * 或分2步
+            * 先获取iOS设备的UDID：
+              ```bash
+              CUR_UDID=$(idevice_id -l | head -n1)
+              ```
+            * 再运行
+              ```bash
+              xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=$CUR_UDID" test
+              ```
+          * 注：
+            * 要在`WebDriverAgent`的目录中运行上述命令
+            * `idevice_id -l`作用是列出当前连接到Mac中的所有iOS的设备（的UDID）
+              * 详见：[idevice_id](https://book.crifan.com/books/apple_develop_summary/website/desktop/idevice_id.html)
+            * `head -n1`作用是获取第一个（iOS设备的UDID）
 
-最后能看到输出`ServerURLHere`和`Using singleton test manager`：
+* 输出正常的`ServerURLHere`和`Using singleton test manager`
+  * ![wda_serverurlhere_example](../assets/img/wda_serverurlhere_example.png)
+  ```bash
+  。。。
+  Test Case '-[UITestingUITests testRunner]' started.
+      t =     0.01s Start Test at 2020-02-20 10:50:59.818
+      t =     0.01s Set Up
+  2020-02-20 10:50:59.968359+0800 WebDriverAgentRunner-Runner[460:142725] Built at Feb 20 2020 10:50:08
+  2020-02-20 10:51:00.119667+0800 WebDriverAgentRunner-Runner[460:142725] ServerURLHere->http://192.168.31.43:8100<-ServerURLHere
+  2020-02-20 10:51:00.123946+0800 WebDriverAgentRunner-Runner[460:142853] Using singleton test manager
+  ```
+  * 即表示正常启动了`test manager`= `WDA的server` 了
 
-```bash
-。。。
-Test Case '-[UITestingUITests testRunner]' started.
-    t =     0.01s Start Test at 2020-02-20 10:50:59.818
-    t =     0.01s Set Up
-2020-02-20 10:50:59.968359+0800 WebDriverAgentRunner-Runner[460:142725] Built at Feb 20 2020 10:50:08
-2020-02-20 10:51:00.119667+0800 WebDriverAgentRunner-Runner[460:142725] ServerURLHere->http://192.168.31.43:8100<-ServerURLHere
-2020-02-20 10:51:00.123946+0800 WebDriverAgentRunner-Runner[460:142853] Using singleton test manager
-```
+### 第一次：确保wda服务运行正常
 
-即表示正常启动了`test manager`= `WDA的server` 了。
+验证服务正常，环境搭建成功的方式：
+
+* 用浏览器等访问status端口
+  * （用浏览器）打开访问上述对应的地址，比如（类似的） http://192.168.31.58:8100/status
+    * 或后续用`iproxy 8100 8100`端口转发后的：http://localhost:8100/status
+  * 可以返回json状态信息
+    * ![wda_status_8100_resp_json](../assets/img/wda_status_8100_resp_json.png)
+  * -》也说明服务启动正常，环境搭建正常了
+* 用代码测试
+  ```python
+  import wda
+
+  # for debug
+  # Enable debug will see http Request and Response
+  # wda.DEBUG = True
+
+  c = wda.Client('http://localhost:8100')
+
+  curStatus = c.status()
+  print("curStatus=%s" % curStatus)
+  ```
+  * 确保能输出信息
+    * 比如
+      ```bash
+      curStatus=AttrDict({'message': 'WebDriverAgent is ready to accept commands', 'state': 'success', 'os': {'testmanagerdVersion': 26, 'name': 'iOS', 'sdkVersion': '14.2', 'version': '12.3.1'}, 'ios': {'ip': '192.168.31.58'}, 'ready': True, 'build': {'time': 'Apr 10 2021 22:08:54', 'productBundleIdentifier': 'com.facebook.WebDriverAgentRunner'}, 'sessionId': None})
+      ```
+    * ![wda_output_status](../assets/img/wda_output_status.png)
+  * 表示环境搭建成功

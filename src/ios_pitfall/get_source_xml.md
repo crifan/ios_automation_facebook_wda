@@ -6,7 +6,7 @@ iOS中最大的坑，就是**获取页面源码**`xml`期间，遇到的各种�
 
 对于页面：
 
-![hengyidai_can_apply_200000](../../assets/img/hengyidai_can_apply_200000.jpg)
+![hengyidai_can_apply_200000](../assets/img/hengyidai_can_apply_200000.jpg)
 
 xml是：
 
@@ -83,7 +83,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 界面上：
 
-![tuhu_slide_end_page_button_no_text](../../assets/img/tuhu_slide_end_page_button_no_text.jpg)
+![tuhu_slide_end_page_button_no_text](../assets/img/tuhu_slide_end_page_button_no_text.jpg)
 
 本来希望去：写规则去查找button，且name是立即进入
 
@@ -114,7 +114,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 对于页面：
 
-![jdfinance_network_not_stable_refresh](../../assets/img/jdfinance_network_not_stable_refresh.jpg)
+![jdfinance_network_not_stable_refresh](../assets/img/jdfinance_network_not_stable_refresh.jpg)
 
 但是对应xml：
 
@@ -135,7 +135,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 但是后来遇到和上面很类似的页面：
 
-![jdfinace_system_not_work_refresh](../../assets/img/jdfinace_system_not_work_refresh.jpg)
+![jdfinace_system_not_work_refresh](../assets/img/jdfinace_system_not_work_refresh.jpg)
 
 可见页面上`再刷新下`也是一个按钮
 
@@ -177,7 +177,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 比如页面：
 
-![yilutongxing_popup_quit_game](../../assets/img/yilutongxing_popup_quit_game.jpg)
+![yilutongxing_popup_quit_game](../assets/img/yilutongxing_popup_quit_game.jpg)
 
 希望获取源码中包含弹框部分的内容
 
@@ -222,7 +222,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 页面中的中间部分的2个图片：
 
-![shanyouchou_two_image](../../assets/img/shanyouchou_two_image.png)
+![shanyouchou_two_image](../assets/img/shanyouchou_two_image.png)
 
 此处xml源码竟然是：
 
@@ -262,7 +262,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 康爱公社-二级页面-百万医保补充互助社.jpg
 
-![kags_second_level_page](../../assets/img/kags_second_level_page.jpg)
+![kags_second_level_page](../assets/img/kags_second_level_page.jpg)
 
 其中，正常的符合预期的是，页面xml源码中，有页面中的元素，比如
 
@@ -272,11 +272,11 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 
 康爱公社-三级页面-资助公示-弹框提醒.jpg
 
-![kags_third_level_page](../../assets/img/kags_third_level_page.jpg)
+![kags_third_level_page](../assets/img/kags_third_level_page.jpg)
 
 竟然其中xml源码中，还有 前一页的页面元素：
 
-![kags_third_level_xml](../../assets/img/kags_third_level_xml.jpg)
+![kags_third_level_xml](../assets/img/kags_third_level_xml.jpg)
 
 ```xml
     <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" x="218" y="280" width="67" height="45">
@@ -303,7 +303,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 。。。
 ```
 
-![kags_xml_contain_pages](../../assets/img/kags_xml_contain_pages.png)
+![kags_xml_contain_pages](../assets/img/kags_xml_contain_pages.png)
 
 且不止一个：
 
@@ -312,7 +312,7 @@ iOS内部页面内容，和输出xml代码之间，一直做的很垃圾。
 。。。
 ```
 
-![kags_xml_contain_other_pages](../../assets/img/kags_xml_contain_other_pages.jpg)
+![kags_xml_contain_other_pages](../assets/img/kags_xml_contain_other_pages.jpg)
 
 其中有几个 `page/xxx`
 

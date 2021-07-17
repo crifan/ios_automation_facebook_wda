@@ -5,6 +5,7 @@
 * [搭建环境](setup_environment/README.md)
   * [常见问题和心得](setup_environment/note_common_qa.md)
 * [开发心得](summary/README.md)
+  * [weditor](summary/weditor.md)
 * [iOS的各种坑](ios_pitfall/README.md)
   * [获取源码xml](ios_pitfall/get_source_xml.md)
 * [常用代码段](common_code/README.md)
