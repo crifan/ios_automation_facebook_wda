@@ -16,9 +16,9 @@ iproxy 8102 8102
 代码中，本地连接不同端口：
 
 ```python
-gWdaClient = wda.Client('http://localhost:8100’)
-gWdaClient = wda.Client('http://localhost:8101’)
-gWdaClient = wda.Client('http://localhost:8102')
+gWdaClient0 = wda.Client('http://localhost:8100’)
+gWdaClient1 = wda.Client('http://localhost:8101’)
+gWdaClient2 = wda.Client('http://localhost:8102')
 ```
 
 即可。
@@ -35,18 +35,19 @@ gWdaClient = wda.Client('http://localhost:8102')
 
 * 消费者：对于apple产品觉得很好看，很喜欢
 * 测试、自动化人员：苦不堪言
-    * 原因：apple生态封闭，不开放
-        * 虽然提供了XCTest，但是很不好用
-        * iOS，Mac等内部的库是不开放的
-            * 没法直接用来做测试和自动化
-            * -》Facebook的WebDriverAgent（后由Appium维护）已经做到了
-                * 用工具从 私有的库中dump出头文件和api接口
-                * 但是实际用起来，仍然是各种bug和不兼容
-                    * 包括但不限于（后续会介绍到的）[各种坑](https://book.crifan.com/books/ios_automation_facebook_wda/website/ios_pitfall/)
-                        * 获取不到源码
-                        * 只能获取部分源码
-                        * 获取源码会导致test manager崩溃（需要重装WebDriverAgentRunner）
-                        * 无法完美支持元素visible属性
-                        * 获取到的源码很混乱
-                          * 比如
-                            * 包含了前一页（甚至几页）的xml源码
+  * 原因：apple生态封闭，不开放
+    * 虽然提供了XCTest，但是很不好用
+    * iOS，Mac等内部的库是不开放的
+      * 没法直接用来做测试和自动化
+      * -》Facebook的WebDriverAgent（后由Appium维护）已经做到了
+        * 用工具从 私有的库中dump出头文件和api接口
+        * 但是实际用起来，仍然是各种bug和不兼容
+          * 包括但不限于（后续会介绍到的）[各种坑](https://book.crifan.com/books/ios_automation_facebook_wda/website/ios_pitfall/)
+            * 获取不到源码
+            * 只能获取部分源码
+            * 获取源码会导致test manager崩溃（需要重装WebDriverAgentRunner）
+            * 无法完美支持元素visible属性
+            * 获取到的源码很混乱
+              * 比如
+                * 包含了前一页（甚至几页）的xml源码
+

@@ -342,7 +342,7 @@ Appium的实现方式都是，想办法用第三方工具class-dump，RuntimeBro
 
 [WebDriverAgent/XCTestManager_ManagerInterface-Protocol.h at master · appium/WebDriverAgent](https://github.com/appium/WebDriverAgent/blob/master/PrivateHeaders/XCTest/XCTestManager_ManagerInterface-Protocol.h#L49)
 
-![xctestmanager_managerinterface_protocol](../assets/img/xctestmanager_managerinterface_protocol.png)
+![xctestmanager_managerinterface_protocol](../assets/img/xctestmanager_managerinterface_protocol.jpg)
 
 然后利用这些私有的API，去实现想要的功能。
 

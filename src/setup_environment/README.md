@@ -115,6 +115,7 @@ cd WebDriverAgent
     * 2种方式
       * XCode
         * `Xcode`->`Product`->`Test`
+          * ![xcode_test_serverurlhere](../assets/img/xcode_test_serverurlhere.jpg)
       * 终端
         * `Terminal`中：运行`xcodebuild`的`test`
           * 直接一步：
@@ -136,29 +137,59 @@ cd WebDriverAgent
               * 详见：[idevice_id](https://book.crifan.com/books/apple_develop_summary/website/desktop/idevice_id.html)
             * `head -n1`作用是获取第一个（iOS设备的UDID）
 
-* 输出正常的`ServerURLHere`和`Using singleton test manager`
-  * ![wda_serverurlhere_example](../assets/img/wda_serverurlhere_example.png)
-  ```bash
-  。。。
-  Test Case '-[UITestingUITests testRunner]' started.
-      t =     0.01s Start Test at 2020-02-20 10:50:59.818
-      t =     0.01s Set Up
-  2020-02-20 10:50:59.968359+0800 WebDriverAgentRunner-Runner[460:142725] Built at Feb 20 2020 10:50:08
-  2020-02-20 10:51:00.119667+0800 WebDriverAgentRunner-Runner[460:142725] ServerURLHere->http://192.168.31.43:8100<-ServerURLHere
-  2020-02-20 10:51:00.123946+0800 WebDriverAgentRunner-Runner[460:142853] Using singleton test manager
-  ```
-  * 即表示正常启动了`test manager`= `WDA的server` 了
-
 ### 第一次：确保wda服务运行正常
 
-验证服务正常，环境搭建成功的方式：
+* 先确保输出正常的信息，包含：`ServerURLHere`和`Using singleton test manager`
+  * 图
+    * ![wda_serverurlhere_example](../assets/img/wda_serverurlhere_example.png)
+  * 文字
+    ```bash
+    。。。
+    Test Case '-[UITestingUITests testRunner]' started.
+        t =     0.01s Start Test at 2020-02-20 10:50:59.818
+        t =     0.01s Set Up
+    2020-02-20 10:50:59.968359+0800 WebDriverAgentRunner-Runner[460:142725] Built at Feb 20 2020 10:50:08
+    2020-02-20 10:51:00.119667+0800 WebDriverAgentRunner-Runner[460:142725] ServerURLHere->http://192.168.31.43:8100<-ServerURLHere
+    2020-02-20 10:51:00.123946+0800 WebDriverAgentRunner-Runner[460:142853] Using singleton test manager
+    ```
+
+即表示正常启动了`test manager`= `WDA的server` 了
+
+### 如何确认`test manager`服务已正常运行
 
 * 用浏览器等访问status端口
-  * （用浏览器）打开访问上述对应的地址，比如（类似的） http://192.168.31.58:8100/status
-    * 或后续用`iproxy 8100 8100`端口转发后的：http://localhost:8100/status
+  * （用浏览器）打开`test manager`中显示的地址
+    * http://192.168.31.43:8100
+    * 再加上`status`后，就是
+    * http://192.168.31.43:8100/status
   * 可以返回json状态信息
-    * ![wda_status_8100_resp_json](../assets/img/wda_status_8100_resp_json.png)
-  * -》也说明服务启动正常，环境搭建正常了
+    * ![wda_status_response](../assets/img/wda_status_response.png)
+    ```json
+    {
+        "value": {
+            "message": "WebDriverAgent is ready to accept commands",
+            "state": "success",
+            "os": {
+                "name": "iOS",
+                "version": "12.4.5",
+                "sdkVersion": "13.0"
+            },
+            "ios": {
+                "simulatorVersion": "12.4.5",
+                "ip": "192.168.31.43"
+            },
+            "ready": true,
+            "build": {
+                "time": "Feb 20 2020 10:50:08",
+                "productBundleIdentifier": "com.facebook.WebDriverAgentRunner"
+            }
+        },
+        "sessionId": "38289A64-E467-4458-A0F1-8A3B2A6AAECE"
+    }
+    ```
+  * 如果已用（`iproxy 8100 8100`实现了）端口转发，则可以直接用`localhost`
+    * http://localhost:8100/status
+      * ![wda_status_8100_resp_json](../assets/img/wda_status_8100_resp_json.png)
 * 用代码测试
   ```python
   import wda
@@ -178,4 +209,5 @@ cd WebDriverAgent
       curStatus=AttrDict({'message': 'WebDriverAgent is ready to accept commands', 'state': 'success', 'os': {'testmanagerdVersion': 26, 'name': 'iOS', 'sdkVersion': '14.2', 'version': '12.3.1'}, 'ios': {'ip': '192.168.31.58'}, 'ready': True, 'build': {'time': 'Apr 10 2021 22:08:54', 'productBundleIdentifier': 'com.facebook.WebDriverAgentRunner'}, 'sessionId': None})
       ```
     * ![wda_output_status](../assets/img/wda_output_status.png)
-  * 表示环境搭建成功
+
+说明服务启动正常，环境搭建正常了

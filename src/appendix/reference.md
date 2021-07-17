@@ -36,12 +36,15 @@
 * 【已解决】WebDriverAgent获取源码慢尝试调节参数：FB_ANIMATION_TIMEOUT
 * 【未解决】Mac中用facebook-wda自动操作安卓手机浏览器实现百度搜索
 * 【已解决】Mac中安装facebook-wda依赖的一些库
-* 【已解决】XCode 11中如何修改WebDriverAgentRunner的bundle identifier
 * 【已解决】XCode中编译报错：A build only device cannot be used to run this target o supported iOS devices are available
-* 【已解决】Mac中XCode如何编译WebDriverAgent.xcodeproj
-* 【已解决】Mac中安装和初始化facebook-wda环境
 * 【已解决】Mac中用weditor辅助调试iOS设备
 * 【未解决】Mac中XCode编译报错：The operation couldn’t be completed. Unable to log in with account account rejected
+* 【已解决】Mac中安装和初始化facebook-wda环境
+* 【已解决】Mac中XCode如何编译WebDriverAgent.xcodeproj
+* 【已解决】用XCode给WebDriverAgent.xcodeproj的WebDriverAgentRunner添加设置code signing代码签名
+* 【已解决】Mac中XCode中WebDriverAgent编译报错：Signing for IntegrationApp requires a development team
+* 【已解决】XCode中WebDriverAgent.xcodeproj自动签名报错：Failed to register bundle identifier com.facebook.WebDriverAgentRunner
+* 【已解决】XCode 11中如何修改WebDriverAgentRunner的bundle identifier
 * 
 * [crifan (Crifan Li)](https://github.com/crifan)
 * [【记录】给Gitbook添加更多配置和功能](http://www.crifan.com/gitbook_add_more_config_and_function)
